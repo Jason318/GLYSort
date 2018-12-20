@@ -5,9 +5,9 @@
 
 #### 1.通过Cocoapods安装:
 
-pod 'GLYPageView', '~> 0.0.1'
+pod 'GLYSort', '~> 0.0.1'
 
-#### 2.直接把GLYPageView文件夹拖入项目
+#### 2.直接把GLYSort文件夹拖入项目
 
 ## 使用：
 
