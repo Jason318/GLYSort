@@ -16,6 +16,7 @@
 		9660EC1521CB6B0D00618E96 /* SortDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC1421CB6B0D00618E96 /* SortDemoTests.m */; };
 		9660EC2021CB6B0D00618E96 /* SortDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC1F21CB6B0D00618E96 /* SortDemoUITests.m */; };
 		9660EC3221CB6C4A00618E96 /* NSMutableArray+GLYSort.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC3121CB6C4900618E96 /* NSMutableArray+GLYSort.m */; };
+		9660EC3521CB6DBD00618E96 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC3421CB6DBD00618E96 /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		9660EC2121CB6B0D00618E96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9660EC3021CB6C4900618E96 /* NSMutableArray+GLYSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+GLYSort.h"; sourceTree = "<group>"; };
 		9660EC3121CB6C4900618E96 /* NSMutableArray+GLYSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+GLYSort.m"; sourceTree = "<group>"; };
+		9660EC3321CB6DBD00618E96 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		9660EC3421CB6DBD00618E96 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				9660EBFC21CB6B0C00618E96 /* AppDelegate.m */,
 				9660EBFE21CB6B0C00618E96 /* ViewController.h */,
 				9660EBFF21CB6B0C00618E96 /* ViewController.m */,
+				9660EC3321CB6DBD00618E96 /* Person.h */,
+				9660EC3421CB6DBD00618E96 /* Person.m */,
 				9660EC0121CB6B0C00618E96 /* Main.storyboard */,
 				9660EC0421CB6B0D00618E96 /* Assets.xcassets */,
 				9660EC0621CB6B0D00618E96 /* LaunchScreen.storyboard */,
@@ -278,6 +283,7 @@
 			files = (
 				9660EC3221CB6C4A00618E96 /* NSMutableArray+GLYSort.m in Sources */,
 				9660EC0021CB6B0C00618E96 /* ViewController.m in Sources */,
+				9660EC3521CB6DBD00618E96 /* Person.m in Sources */,
 				9660EC0B21CB6B0D00618E96 /* main.m in Sources */,
 				9660EBFD21CB6B0C00618E96 /* AppDelegate.m in Sources */,
 			);
