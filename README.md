@@ -4,7 +4,8 @@
 
 只需1行代码即可完成赋值的排序工作
 
-··
+
+```
 NSMutableArray *datasource = [NSMutableArray array];
     
     Person *personOne = [[Person alloc] init];
@@ -49,4 +50,5 @@ NSMutableArray *datasource = [NSMutableArray array];
 //    [datasource gly_quickSort:@"money" result:NSOrderedAscending];
     
     NSLog(@"datasource....%@",datasource);
-    ··
+ 
+```
