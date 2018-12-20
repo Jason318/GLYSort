@@ -15,6 +15,7 @@
 		9660EC0B21CB6B0D00618E96 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC0A21CB6B0D00618E96 /* main.m */; };
 		9660EC1521CB6B0D00618E96 /* SortDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC1421CB6B0D00618E96 /* SortDemoTests.m */; };
 		9660EC2021CB6B0D00618E96 /* SortDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC1F21CB6B0D00618E96 /* SortDemoUITests.m */; };
+		9660EC3221CB6C4A00618E96 /* NSMutableArray+GLYSort.m in Sources */ = {isa = PBXBuildFile; fileRef = 9660EC3121CB6C4900618E96 /* NSMutableArray+GLYSort.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		9660EC1B21CB6B0D00618E96 /* SortDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SortDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9660EC1F21CB6B0D00618E96 /* SortDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SortDemoUITests.m; sourceTree = "<group>"; };
 		9660EC2121CB6B0D00618E96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9660EC3021CB6C4900618E96 /* NSMutableArray+GLYSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+GLYSort.h"; sourceTree = "<group>"; };
+		9660EC3121CB6C4900618E96 /* NSMutableArray+GLYSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+GLYSort.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,7 @@
 		9660EBFA21CB6B0C00618E96 /* SortDemo */ = {
 			isa = PBXGroup;
 			children = (
+				9660EC2F21CB6C4900618E96 /* NSMutableArray+GLYSort */,
 				9660EBFB21CB6B0C00618E96 /* AppDelegate.h */,
 				9660EBFC21CB6B0C00618E96 /* AppDelegate.m */,
 				9660EBFE21CB6B0C00618E96 /* ViewController.h */,
@@ -130,6 +134,16 @@
 				9660EC2121CB6B0D00618E96 /* Info.plist */,
 			);
 			path = SortDemoUITests;
+			sourceTree = "<group>";
+		};
+		9660EC2F21CB6C4900618E96 /* NSMutableArray+GLYSort */ = {
+			isa = PBXGroup;
+			children = (
+				9660EC3021CB6C4900618E96 /* NSMutableArray+GLYSort.h */,
+				9660EC3121CB6C4900618E96 /* NSMutableArray+GLYSort.m */,
+			);
+			name = "NSMutableArray+GLYSort";
+			path = "../../NSMutableArray+GLYSort";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9660EC3221CB6C4A00618E96 /* NSMutableArray+GLYSort.m in Sources */,
 				9660EC0021CB6B0C00618E96 /* ViewController.m in Sources */,
 				9660EC0B21CB6B0D00618E96 /* main.m in Sources */,
 				9660EBFD21CB6B0C00618E96 /* AppDelegate.m in Sources */,
