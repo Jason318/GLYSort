@@ -25,9 +25,10 @@
         BOOL flag = NO;
         for (NSInteger j = 0; j < self.count - i - 1; j++)
         {
-            NSNumber *numberOne = [self[j] valueForKey:propertyName];
-            NSNumber *numberTwo = [self[j + 1] valueForKey:propertyName];
-            if ([numberOne compare:numberTwo] == result)
+            double numberOne = [[self[j] valueForKey:propertyName] doubleValue];
+            double numberTwo = [[self[j + 1] valueForKey:propertyName] doubleValue];
+            BOOL condition = result == NSOrderedDescending ? numberOne > numberTwo : numberOne < numberTwo;
+            if (condition)
             {
                 flag = YES;
                 [self exchangeObjectAtIndex:j withObjectAtIndex:j + 1];
@@ -48,14 +49,15 @@
     for (NSInteger i = 1; i < self.count; i++)
     {
         id aimObj = self[i];
-        NSNumber *aimNumber = [aimObj valueForKey:propertyName];
+        double aimNumber = [[aimObj valueForKey:propertyName] doubleValue];
         NSInteger j = i - 1;
         
         for (; j >= 0; j--)
         {
             id obj = self[j];
-            NSNumber *number = [obj valueForKey:propertyName];;
-            if ([number compare:aimNumber] == result)
+            double number = [[obj valueForKey:propertyName] doubleValue];
+            BOOL condition = result == NSOrderedDescending ? number > aimNumber : number < aimNumber;
+            if (condition)
             {
                 [self replaceObjectAtIndex:j + 1 withObject:self[j]];
             }
@@ -76,15 +78,16 @@
     {
         NSInteger j = i;
         
-        NSNumber *minNumber = [self[j] valueForKey:propertyName];
+        double minNumber = [[self[j] valueForKey:propertyName] doubleValue];
         NSInteger index = j;
         
         for (; j < self.count; j++)
         {
-            NSNumber *tempNumber = [self[j] valueForKey:propertyName];
-            if ([minNumber compare:tempNumber] == result)
+            double tempNumber = [[self[j] valueForKey:propertyName] doubleValue];
+            BOOL condition = result == NSOrderedDescending ? minNumber > tempNumber : minNumber < tempNumber;
+            if (condition)
             {
-                minNumber = [self[j] valueForKey:propertyName];
+                minNumber = [[self[j] valueForKey:propertyName] doubleValue];
                 index = j;
             }
         }
@@ -106,13 +109,24 @@
         for (NSInteger i = gap ; i < self.count; i++)
         {
             id tempObj = self[i];
-            NSNumber *tempNumber = [tempObj valueForKey:propertyName];
+            double tempNumber = [[tempObj valueForKey:propertyName] doubleValue];
             NSInteger j = i;
-            
-            while (j >= gap && [[self[j - gap] valueForKey:propertyName] compare:tempNumber] == result)
+
+            if (result == NSOrderedDescending)
             {
-                [self replaceObjectAtIndex:j withObject:[self objectAtIndex:j - gap]];
-                j -= gap;
+                while (j >= gap && [[self[j - gap] valueForKey:propertyName] doubleValue] > tempNumber)
+                {
+                    [self replaceObjectAtIndex:j withObject:[self objectAtIndex:j - gap]];
+                    j -= gap;
+                }
+            }
+            else
+            {
+                while (j >= gap && [[self[j - gap] valueForKey:propertyName] doubleValue] < tempNumber)
+                {
+                    [self replaceObjectAtIndex:j withObject:[self objectAtIndex:j - gap]];
+                    j -= gap;
+                }
             }
             
             [self replaceObjectAtIndex:j withObject:tempObj];
@@ -156,9 +170,10 @@
     
     while (i <= q && j <= r)
     {
-        NSNumber *numberOne = [self[i] valueForKey:propertyName];
-        NSNumber *numberTwo = [self[j] valueForKey:propertyName];
-        if ([numberOne compare:numberTwo] == result)
+        double numberOne = [[self[i] valueForKey:propertyName] doubleValue];
+        double numberTwo = [[self[j] valueForKey:propertyName] doubleValue];
+        BOOL condition = result == NSOrderedDescending ? numberOne > numberTwo : numberOne < numberTwo;
+        if (condition)
         {
             [tempArray insertObject:self[j++] atIndex:k++];
         }
@@ -206,13 +221,14 @@
 
 - (NSInteger)gly_partitionPropertyName:(NSString *)propertyName result:(NSComparisonResult)result p:(NSInteger)p r:(NSInteger)r
 {
-    NSNumber *pivot = [self[r] valueForKey:propertyName];
+    double pivot = [[self[r] valueForKey:propertyName] doubleValue];
     NSInteger i = p;
     
     for (NSInteger j = p; j < r; j++)
     {
-        NSNumber *tempNumber = [self[j] valueForKey:propertyName];
-        if ([pivot compare:tempNumber] == result)
+        double tempNumber = [[self[j] valueForKey:propertyName] doubleValue];
+        BOOL condition = result == NSOrderedDescending ? pivot > tempNumber : pivot < tempNumber;
+        if (condition)
         {
             [self exchangeObjectAtIndex:i withObjectAtIndex:j];
             i++;
@@ -222,6 +238,232 @@
     [self exchangeObjectAtIndex:i withObjectAtIndex:r];
     
     return i;
+}
+
+#pragma mark -
+#pragma mark 桶排序
+- (void)gly_bucketSort:(NSString *)propertyName result:(NSComparisonResult)result
+{
+    //预计每个桶内能装3个
+    NSInteger size = 3;
+    
+    //桶的数量
+    NSInteger bucketsCount = self.count / size;
+    
+    //找出最小值和最大值
+    double min = [[self[0] valueForKey:propertyName] doubleValue];
+    double max = [[self[0] valueForKey:propertyName] doubleValue];
+    
+    for (id obj in self)
+    {
+        double number = [[obj valueForKey:propertyName] doubleValue];
+        if (number < min)
+        {
+            min = number;
+        }
+        
+        if (number > max)
+        {
+            max = number;
+        }
+    }
+    
+    //平均值
+    NSInteger average = ceil((max - min)/(double)bucketsCount);
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    //创建空桶
+    for (NSInteger i = 0; i <= bucketsCount; i++)
+    {
+        NSMutableArray *bucketArray = [NSMutableArray array];
+        NSString *key = [NSString stringWithFormat:@"%@-%@",@(min + i * average),@(min + (i + 1) * average)];
+        [dictionary setValue:bucketArray forKey:key];
+    }
+    
+    for (id obj in self)
+    {
+        double number = [[obj valueForKey:propertyName] doubleValue];
+        NSInteger i = floor((number - min) / (double)average);
+        NSString *key = [NSString stringWithFormat:@"%@-%@",@(min + i * average),@(min + (i + 1) * average)];
+        NSMutableArray *bucketArray = [dictionary valueForKey:key];
+        [bucketArray addObject:obj];
+    }
+    
+    NSInteger length = 0;
+    for (NSInteger i = 0; i < dictionary.allKeys.count; i++)
+    {
+        NSString *key = [NSString stringWithFormat:@"%@-%@",@(min + i * average),@(min + (i + 1) * average)];
+        NSMutableArray *bucketArray = [dictionary objectForKey:key];
+        [bucketArray gly_quickSort:propertyName result:result];
+        if (result == NSOrderedDescending)
+        {
+            [self replaceObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(length, bucketArray.count)] withObjects:bucketArray];
+        }
+        else
+        {
+            NSInteger start = self.count - length - bucketArray.count;
+            [self replaceObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(start, bucketArray.count)] withObjects:bucketArray];
+        }
+        length += bucketArray.count;
+    }
+}
+
+#pragma mark -
+#pragma mark 计数排序
+- (void)gly_countingSort:(NSString *)propertyName result:(NSComparisonResult)result
+{
+    if (self.count <= 1)
+    {
+        return;
+    }
+    
+    NSInteger max = [[self[0] valueForKey:propertyName] integerValue];
+    
+    for (id obj in self)
+    {
+        NSNumber *number = [obj valueForKey:propertyName];
+        if (number.integerValue > max)
+        {
+            max = number.integerValue;
+        }
+    }
+    
+    NSMutableArray *countArray = [NSMutableArray array];
+    
+    for (NSInteger i = 0; i <= max; i++)
+    {
+        [countArray addObject:@(0)];
+    }
+    
+    NSMutableArray *resultArray = [NSMutableArray array];
+    
+    for (NSInteger i = 0; i < self.count; i++)
+    {
+        [resultArray addObject:@(0)];
+        
+        NSNumber *index = [self[i] valueForKey:propertyName];
+        NSNumber *count = countArray[index.integerValue];
+        [countArray replaceObjectAtIndex:index.integerValue withObject:@(count.integerValue + 1)];
+    }
+    
+    for (NSInteger i = 1; i <= max; i++)
+    {
+        [countArray replaceObjectAtIndex:i withObject:@([countArray[i] integerValue] + [countArray[i - 1] integerValue])];
+    }
+    
+    for (NSInteger i = self.count - 1; i >= 0; i--)
+    {
+        NSNumber *index = [self[i] valueForKey:propertyName];
+        NSInteger count = [countArray[index.integerValue] integerValue] - 1;
+        
+        NSInteger location = result == NSOrderedDescending ? count : self.count - 1 - count;
+        
+        [resultArray replaceObjectAtIndex:location withObject:self[i]];
+        [countArray replaceObjectAtIndex:index.integerValue withObject:@(count)];
+    }
+    
+    for (NSInteger i = 0; i < self.count; i++)
+    {
+        [self replaceObjectAtIndex:i withObject:resultArray[i]];
+    }
+}
+
+#pragma mark -
+#pragma mark 基数排序
+- (void)gly_radixSort:(NSString *)propertyName result:(NSComparisonResult)result
+{
+    NSMutableArray *bucket = [self createBucket];
+    long maxNumber = [self listMaxItem:propertyName];
+    NSInteger maxLength = [self numberLength:maxNumber];
+    
+    for (NSInteger digit = 1; digit <= maxLength; digit++)
+    {
+        //入桶
+        for (id obj in self)
+        {
+            NSNumber *number = [obj valueForKey:propertyName];
+            NSInteger baseNumber = [self fetchBaseNumber:number.integerValue digit:digit];
+            NSMutableArray *subArray = bucket[baseNumber];
+            [subArray addObject:obj];
+        }
+        
+        //出桶
+        NSInteger index = 0;
+        
+        NSInteger i = result == NSOrderedDescending ? 0 : bucket.count - 1;
+        for (;result == NSOrderedDescending ? (i < bucket.count) : (i >= 0); result == NSOrderedDescending ? i++ : i--)
+        {
+            NSMutableArray *subArray = bucket[i];
+            while (subArray.count > 0)
+            {
+                id obj = subArray[0];
+                [self replaceObjectAtIndex:index withObject:obj];
+                [subArray removeObjectAtIndex:0];
+                index++;
+            }
+        }
+    }
+}
+
+//创建10个空桶
+- (NSMutableArray *)createBucket
+{
+    NSMutableArray *bucketArray = [NSMutableArray array];
+    
+    for (NSInteger i = 0; i < 10; i++)
+    {
+        [bucketArray addObject:[NSMutableArray array]];
+    }
+    
+    return bucketArray;
+}
+
+//计算无序序列中最大或最小的数值
+- (long)listMaxItem:(NSString *)propertyName
+{
+    NSInteger max = [[self[0] valueForKey:propertyName] integerValue];
+    
+    for (NSInteger i = 1; i < self.count; i++)
+    {
+        id obj = self[i];
+        NSInteger number = [[obj valueForKey:propertyName] integerValue];
+        if (max < number)
+        {
+            max = number;
+        }
+    }
+    
+    return max;
+}
+
+//获取数字的长度
+- (NSInteger)numberLength:(NSInteger)number
+{
+    NSString *numberStr = [NSString stringWithFormat:@"%ld",(long)number];
+    
+    return numberStr.length;
+}
+
+//获取数值中特定位数的值
+- (NSInteger)fetchBaseNumber:(NSInteger)number digit:(NSInteger)digit
+{
+    if (digit > 0 && digit <= [self numberLength:number])
+    {
+        NSMutableArray *numbersArray = [NSMutableArray array];
+        
+        NSString *numberStr = [NSString stringWithFormat:@"%ld",(long)number];
+        
+        for (NSInteger i = 0; i < numberStr.length; i++)
+        {
+            NSString *subStr = [numberStr substringWithRange:NSMakeRange(i, 1)];
+            [numbersArray addObject:[NSNumber numberWithInteger:subStr.integerValue]];
+        }
+        
+        return [numbersArray[numbersArray.count - digit] integerValue];
+    }
+    
+    return 0;
 }
 
 @end

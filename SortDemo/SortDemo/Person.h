@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @interface Person : NSObject
 
@@ -14,5 +15,8 @@
 @property (nonatomic ,assign) NSInteger age;
 @property (nonatomic ,strong) NSString  *record;
 @property (nonatomic ,strong) NSNumber  *money;
+@property (nonatomic ,assign) long      mobile;
+@property (nonatomic ,assign) NSInteger room;
+@property (nonatomic ,assign) CGFloat   height;
 
 @end

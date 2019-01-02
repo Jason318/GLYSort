@@ -28,4 +28,13 @@
 // 快速排序
 - (void)gly_quickSort:(NSString *)propertyName result:(NSComparisonResult)result;
 
+// 桶排序
+- (void)gly_bucketSort:(NSString *)propertyName result:(NSComparisonResult)result;
+
+// 计数排序
+- (void)gly_countingSort:(NSString *)propertyName result:(NSComparisonResult)result;
+
+// 基数排序
+- (void)gly_radixSort:(NSString *)propertyName result:(NSComparisonResult)result;
+
 @end
