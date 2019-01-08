@@ -57,6 +57,10 @@ NSMutableArray *datasource = [NSMutableArray array];
 //    [datasource gly_quickSort:@"age" result:NSOrderedAscending];
     [datasource gly_quickSort:@"record" result:NSOrderedDescending];
 //    [datasource gly_quickSort:@"money" result:NSOrderedAscending];
+
+    //二分查找
+    NSInteger index = [datasource gly_bsearchLessWithLoop:@"height" value:207.6f];
+    NSLog(@"index....%ld",(long)index);
     
     NSLog(@"datasource....%@",datasource);
  
