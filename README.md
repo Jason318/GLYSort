@@ -5,7 +5,7 @@
 
 #### 1.通过Cocoapods安装:
 
-pod 'GLYSort', '~> 0.0.1'
+pod 'GLYSort', '~> 0.0.4'
 
 #### 2.直接把GLYSort文件夹拖入项目
 
