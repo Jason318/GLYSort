@@ -1,5 +1,5 @@
 # GLYSort
-### 冒泡排序，插入排序，选择排序，希尔排序，归并排序，快速排序
+### 冒泡排序，插入排序，选择排序，希尔排序，归并排序，快速排序，二分查找
 
 ## 导入：
 
@@ -57,6 +57,10 @@ NSMutableArray *datasource = [NSMutableArray array];
 //    [datasource gly_quickSort:@"age" result:NSOrderedAscending];
     [datasource gly_quickSort:@"record" result:NSOrderedDescending];
 //    [datasource gly_quickSort:@"money" result:NSOrderedAscending];
+
+    //二分查找
+    NSInteger index = [datasource gly_bsearchLessWithLoop:@"height" value:207.6f];
+    NSLog(@"index....%ld",(long)index);
     
     NSLog(@"datasource....%@",datasource);
  
