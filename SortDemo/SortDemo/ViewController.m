@@ -84,6 +84,9 @@
     NSLog(@"index....%ld",(long)index);
 
 //    NSLog(@"datasource....%@",datasource);
+    
+    NSInteger number = (("n" - "a") * 26*26*26 + ("i" - "a")*26*26 + ("c" - "a")*26+ ("e"-"a")) / 78978;
+    NSLog(@"number....%ld",(long)number);
 }
 
 
